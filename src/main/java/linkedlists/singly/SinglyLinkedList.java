@@ -1,4 +1,4 @@
-package unilinkedlist;
+package linkedlists.singly;
 
 public class SinglyLinkedList {
     private Node head;
@@ -69,6 +69,21 @@ public class SinglyLinkedList {
         Node previous = getSingleNode(index - 1);
         Node next = getSingleNode(index + 1);
         previous.setNext(next);
+    }
+
+    public void deleteWithoutSize(int index) {
+        if (index == 0) {
+            head.getNext();
+            return;
+        }
+
+        for (int i = index-1; i < index; i++) {
+            head = head.getNext();
+            if(head.getNext() == null) throw new IllegalArgumentException("Index out of bound");
+
+        }
+
+
     }
 
     private Node getNode(int index) {

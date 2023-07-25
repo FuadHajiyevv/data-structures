@@ -1,4 +1,4 @@
-package unilinkedlist;
+package linkedlists.singly;
 
 public class Node {
     private int value;
