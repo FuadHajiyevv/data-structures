@@ -71,21 +71,6 @@ public class SinglyLinkedList {
         previous.setNext(next);
     }
 
-    public void deleteWithoutSize(int index) {
-        if (index == 0) {
-            head.getNext();
-            return;
-        }
-
-        for (int i = index-1; i < index; i++) {
-            head = head.getNext();
-            if(head.getNext() == null) throw new IllegalArgumentException("Index out of bound");
-
-        }
-
-
-    }
-
     private Node getNode(int index) {
         if (index >= size || index < 0) {
             throw new IllegalArgumentException();
@@ -117,10 +102,6 @@ public class SinglyLinkedList {
         return false;
     }
 
-    public Node getTail() {
-        return tail;
-    }
-
     private Node getSingleNode(int index) {
         if (index >= size || index < 0) {
             throw new IllegalArgumentException();
@@ -134,11 +115,6 @@ public class SinglyLinkedList {
         }
         return tail;
     }
-
-    public Node getHead() {
-        return head;
-    }
-
 
     public int size() {
         return size;
