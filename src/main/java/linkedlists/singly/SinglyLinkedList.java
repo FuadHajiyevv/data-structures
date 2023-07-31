@@ -134,6 +134,7 @@ public class SinglyLinkedList<T> implements Iterable<T> {
         return size;
     }
 
+
     @Override
     public String toString() {
         return "[" + head + "]";

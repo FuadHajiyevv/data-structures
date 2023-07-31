@@ -2,15 +2,11 @@ package hash_table;
 
 import linkedlists.singly.SinglyLinkedList;
 
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class HashTable<K, V> {
-
     private int size;
     private SinglyLinkedList<Entry<K, V>>[] table;
 
@@ -29,12 +25,14 @@ public class HashTable<K, V> {
     }
 
     public HashTable(int initialCapacity) {
+        if(initialCapacity < 0) throw new IllegalArgumentException();
         capacity = initialCapacity;
         loadFactor = DEFAULT_LOAD_FACTOR;
         table = new SinglyLinkedList[initialCapacity];
     }
 
     public HashTable(int initialCapacity,float loadFactor){
+        if(initialCapacity < 0 || loadFactor < 0) throw  new IllegalArgumentException();
         capacity = initialCapacity;
         this.loadFactor = loadFactor;
         table = new SinglyLinkedList[initialCapacity];
