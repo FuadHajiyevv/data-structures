@@ -1,29 +1,32 @@
 package linkedlists.singly;
 
-public class SinglyLinkedList {
-    private Node head;
+import java.util.Iterator;
+import java.util.Objects;
 
-    private Node tail;
+public class SinglyLinkedList<T> implements Iterable<T> {
+    private Node<T> head;
+
+    private Node<T> tail;
     private int size;
 
     public SinglyLinkedList() {
         head = tail = null;
     }
 
-    public void add(int value) {
+    public void add(T value) {
         if (size == 0) {
             size++;
-            head = new Node(value);
+            head = new Node<>(value);
             tail = head;
             return;
         }
         size++;
-        Node node = new Node(value);
+        Node<T> node = new Node<>(value);
         tail.next(node);
         tail = node;
     }
 
-    public void add(int index, int value) {
+    public void add(int index, T value) {
         if (index >= size || index < 0) {
             throw new IllegalArgumentException();
         }
@@ -33,18 +36,18 @@ public class SinglyLinkedList {
                 tail = head.getNext();
             }
             if (i > 1) {
-                Node node = tail.getNext();
+                Node<T> node = tail.getNext();
                 tail = node;
             }
             if (i == index) {
-                Node node = tail;
+                Node<T> node = tail;
                 node.setValue(value);
                 break;
             }
         }
     }
 
-    public int get(int index) {
+    public T get(int index) {
         if (index >= size || index < 0) {
             throw new IllegalArgumentException();
         }
@@ -66,19 +69,19 @@ public class SinglyLinkedList {
             getNode(index - 1).setNext(null);
             return;
         }
-        Node previous = getSingleNode(index - 1);
-        Node next = getSingleNode(index + 1);
+        Node<T> previous = getSingleNode(index - 1);
+        Node<T> next = getSingleNode(index + 1);
         previous.setNext(next);
     }
 
-    private Node getNode(int index) {
+    private Node<T> getNode(int index) {
         if (index >= size || index < 0) {
             throw new IllegalArgumentException();
         }
         if (index == 0) {
             return head;
         }
-        Node current = head;
+        Node<T> current = head;
         for (int i = 0; i < index; i++) {
             current = current.getNext();
         }
@@ -86,23 +89,30 @@ public class SinglyLinkedList {
         return tail;
     }
 
-    public void nextMethod(int index) {
-        Node current = head;
+    private void nextMethod(int index) {
+        Node<T> current = head;
         for (int i = 0; i < index; i++) {
             current = current.getNext();
         }
         tail = current;
     }
 
+    public int indexOf(T value){
+        for (int i = 0; i < size ; i++) {
+            if(get(i).equals(value)) return i;
+        }
+        return -1;
+    }
 
-    public boolean contains(int num) {
+
+    public boolean contains(T value) {
         for (int i = 0; i < size; i++) {
-            if (get(i) == num) return true;
+            if (get(i).equals(value)) return true;
         }
         return false;
     }
 
-    private Node getSingleNode(int index) {
+    private Node<T> getSingleNode(int index) {
         if (index >= size || index < 0) {
             throw new IllegalArgumentException();
         }
@@ -116,6 +126,10 @@ public class SinglyLinkedList {
         return tail;
     }
 
+    public Node<T> getHead() {
+        return head;
+    }
+
     public int size() {
         return size;
     }
@@ -123,5 +137,23 @@ public class SinglyLinkedList {
     @Override
     public String toString() {
         return "[" + head + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SinglyLinkedList<?> that = (SinglyLinkedList<?>) o;
+        return size == that.size && Objects.equals(head, that.head) && Objects.equals(tail, that.tail);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(head, tail, size);
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new SinglyLinkedListIterator<T>(this);
     }
 }
